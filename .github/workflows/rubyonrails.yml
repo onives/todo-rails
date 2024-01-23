@@ -37,4 +37,4 @@ jobs:
       run: bundle exec rspec --format documentation
 
     - name: Run Minitests
-      run: bin/rails test:all
+      run: bin/rails test:all --verbose
