@@ -35,3 +35,6 @@ jobs:
 
     - name: Run RSpec Tests
       run: bundle exec rspec --format documentation
+
+    - name: Run Minitests
+      run: bin/rails test:all
