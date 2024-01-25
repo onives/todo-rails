@@ -4,7 +4,6 @@
 class TodosController < ApplicationController
   def index
     @todos = Todo.all
-    puts @todos
   end
 
   def new

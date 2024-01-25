@@ -21,12 +21,10 @@ RSpec.describe 'Todos', type: :request do
       expect(response).to render_template(:new)
     end
     it 'should create a todo' do
-      # todo = Todo.create
       post '/todos', params: { todo: { title: 'First Todo', body: 'This is a body!' } }
       expect(response).to redirect_to(assigns(:todo))
       follow_redirect!
       expect(response).to render_template(:show)
-      # expect(assigns(:todos)).to include(todo)
     end
   end
 end
