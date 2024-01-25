@@ -8,7 +8,12 @@ RSpec.describe Todo, type: :model do
     expect(subject).to be_valid
   end
 
-  it 'should a title' do
+  it 'should require a body' do
+    subject = Todo.new(body: nil, title: 'a title')
+    expect(subject).not_to be_valid
+  end
+
+  it 'should require a title' do
     subject = Todo.new(body: 'a body', title: nil)
     expect(subject).not_to be_valid
   end
