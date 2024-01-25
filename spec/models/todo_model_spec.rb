@@ -9,7 +9,7 @@ RSpec.describe Todo, type: :model do
   end
 
   it 'should a title' do
-    subject = Todo.new(body: 'a body')
+    subject = Todo.new(body: 'a body', title: nil)
     expect(subject).not_to be_valid
   end
 end
