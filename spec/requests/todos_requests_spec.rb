@@ -17,16 +17,16 @@ RSpec.describe 'Todos', type: :request do
 
   describe '#create' do
     it 'should display form for creating new todo' do
-      # todo = Todo.create
       get '/todos/new'
       expect(response).to render_template(:new)
-      # expect(assigns(:todo)).to eq(todo)
     end
-    # it 'should create a todo' do
-    #   todo = Todo.create
-    #   post '/todos', params: { todo: { title: 'First Todo', body: 'This is a body!' } }
-    #   expect(response).to render_template(:show)
-    #   expect(assigns(:todos)).to include(todo)
-    # end
+    it 'should create a todo' do
+      # todo = Todo.create
+      post '/todos', params: { todo: { title: 'First Todo', body: 'This is a body!' } }
+      expect(response).to redirect_to(assigns(:todo))
+      follow_redirect!
+      expect(response).to render_template(:show)
+      # expect(assigns(:todos)).to include(todo)
+    end
   end
 end
