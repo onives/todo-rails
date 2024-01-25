@@ -38,3 +38,6 @@ jobs:
 
     - name: Run Minitests
       run: bin/rails test:all --verbose
+     
+    - name: Run Rubocop
+      run: rubocop --require rubocop-rails
