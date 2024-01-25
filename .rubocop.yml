@@ -1,1 +1,4 @@
 require: rubocop-rails
+
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context']
