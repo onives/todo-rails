@@ -22,4 +22,9 @@ RSpec.describe Todo, type: :model do
     todo = Todo.new(title: 'fake title', body: 'some fake body here!')
     assert todo.destroy, 'Failed to delete todo'
   end
+  it 'should update todo' do
+    subject = Todo.new(title: 'fake title', body: 'some fake body here!')
+    subject.update(body: 'updated body')
+    expect(subject.body).to eql('updated body')
+  end
 end
