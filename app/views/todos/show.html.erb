@@ -2,7 +2,11 @@
 
 <p><%= @todo.body %></p>
 
+<li><%= link_to 'Edit Todo', edit_todo_path(@todo)%></li>
 <li><%= link_to 'Destroy', todo_path(@todo), data: {
                     turbo_method: :delete,
                     turbo_confirm: "Are you sure?"
                   } %></li>
+                
+
+<li><%= link_to 'Todos List', todos_path(@todos)%></li>

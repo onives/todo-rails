@@ -51,4 +51,15 @@ RSpec.describe 'Todos', type: :request do
       expect(response).to render_template(:index)
     end
   end
+
+  describe '#update' do
+    it 'should display todo edit form' do
+      todo = Todo.create(title: 'some todo', body: 'some body here')
+      get "/todos/#{todo.id}/edit"
+      expect(response).to render_template(:edit)
+    end
+    # xit 'should update an existing todo' do
+    #   todo = Todo.create(title: 'some todo', body: 'some body here')
+    # end
+  end
 end
