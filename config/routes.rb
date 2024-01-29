@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   # get '/todos/new', to: 'todos#new'
   # post '/todos', to: 'todos#create'
   # get '/todos/:id', to: 'todos#show'
-  resources :todos, only: %i[index show create new destroy edit]
+  resources :todos, only: %i[index show create new destroy edit update]
 end
