@@ -1,3 +1,8 @@
 <h1><%= @todo.title %></h1>
 
 <p><%= @todo.body %></p>
+
+<li><%= link_to 'Destroy', todo_path(@todo), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>

@@ -40,8 +40,15 @@ RSpec.describe 'Todos', type: :request do
     it 'should destroy todo' do
       todo = Todo.create(title: 'some todo', body: 'some body here')
       delete "/todos/#{todo.id}"
-      # expect(response).to have_http_status(204)
       expect(Todo.find_by(id: todo.id)).to be_nil
+    end
+    it 'should destroy and redirect to list of todos' do
+      todo = Todo.create(title: 'some todo', body: 'some body here')
+      delete "/todos/#{todo.id}"
+      follow_redirect!
+      # expect(response).to have_http_status(303)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:index)
     end
   end
 end
