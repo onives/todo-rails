@@ -9,9 +9,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "todos#index"
-  # get '/todos', to: 'todos#index'
-  # get '/todos/new', to: 'todos#new'
-  # post '/todos', to: 'todos#create'
-  # get '/todos/:id', to: 'todos#show'
-  resources :todos, only: %i[index show create new destroy edit update]
+  resources :todos
 end
