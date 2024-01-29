@@ -17,4 +17,9 @@ RSpec.describe Todo, type: :model do
     subject = Todo.new(body: 'a body', title: nil)
     expect(subject).to_not be_valid
   end
+
+  it 'should destroy todo' do
+    todo = Todo.new(title: 'fake title', body: 'some fake body here!')
+    assert todo.destroy, 'Failed to delete todo'
+  end
 end
