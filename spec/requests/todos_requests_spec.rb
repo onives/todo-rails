@@ -45,9 +45,8 @@ RSpec.describe 'Todos', type: :request do
     it 'should destroy and redirect to list of todos' do
       todo = Todo.create(title: 'some todo', body: 'some body here')
       delete "/todos/#{todo.id}"
+      expect(response).to have_http_status(303)
       follow_redirect!
-      # expect(response).to have_http_status(303)
-      expect(response).to have_http_status(200)
       expect(response).to render_template(:index)
     end
   end
@@ -64,6 +63,12 @@ RSpec.describe 'Todos', type: :request do
       expect(response).to redirect_to(assigns(:todo))
       follow_redirect!
       expect(response).to render_template(:show)
+    end
+    it 'should render edit view if update is unsuccessful' do
+      todo = Todo.create(title: 'some todo', body: 'some body here')
+      patch "/todos/#{todo.id}", params: { todo: { body: 'Changed body', title: nil } }
+      expect(response).to have_http_status(422)
+      expect(response).to render_template(:edit)
     end
   end
 end
