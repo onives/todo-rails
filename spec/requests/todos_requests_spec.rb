@@ -69,6 +69,7 @@ RSpec.describe 'Todos', type: :request do
       patch "/todos/#{todo.id}", params: { todo: { body: 'Changed body', title: nil } }
       expect(response).to have_http_status(422)
       expect(response).to render_template(:edit)
+      expect(response.body).to include('Validation failed')
     end
   end
 end

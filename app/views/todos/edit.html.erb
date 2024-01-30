@@ -1,5 +1,7 @@
 <h1>Edit Todo</h1>
 
+<%= @error %>
+
 <%= form_with model: @todo do |form| %>
   <div>
     <%= form.label :title %><br>

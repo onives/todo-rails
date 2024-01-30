@@ -30,9 +30,11 @@ class TodosController < ApplicationController
   def update
     @todo = Todo.find(params[:id])
 
-    if @todo.update(todo_params)
+    begin
+      @todo.update!(todo_params)
       redirect_to @todo
-    else
+    rescue StandardError => e
+      @error = e.message
       render :edit, status: :unprocessable_entity
     end
   end
