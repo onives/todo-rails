@@ -38,6 +38,14 @@ jobs:
 
     - name: Run Minitests
       run: bin/rails test:all --verbose
-     
-    - name: Run Rubocop
-      run: rubocop --require rubocop-rails
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+      - run: gem install rubocop rubocop-rails
+      - name: Run Rubocop Lint
+        run: rubocop --require rubocop-rails
