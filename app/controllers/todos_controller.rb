@@ -2,20 +2,22 @@
 
 # Todos controller Class
 class TodosController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @todos = Todo.all
+    @todos = current_user.todos
   end
 
   def new
-    @todo = Todo.new
+    @todo = current_user.todos.new
   end
 
   def show
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
   end
 
   def create
-    @todo = Todo.new(todo_params)
+    @todo = current_user.todos.new(todo_params)
     if @todo.save
       redirect_to @todo
     else
@@ -24,11 +26,11 @@ class TodosController < ApplicationController
   end
 
   def edit
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
   end
 
   def update
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
 
     begin
       @todo.update!(todo_params)
@@ -40,7 +42,7 @@ class TodosController < ApplicationController
   end
 
   def destroy
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
     @todo.destroy
 
     redirect_to todos_path, status: :see_other
