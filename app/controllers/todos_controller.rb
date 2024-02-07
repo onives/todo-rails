@@ -3,6 +3,7 @@
 # Todos controller Class
 class TodosController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_todo, only: %i[destroy update show edit]
 
   def index
     @todos = current_user.todos
@@ -12,9 +13,7 @@ class TodosController < ApplicationController
     @todo = current_user.todos.new
   end
 
-  def show
-    @todo = current_user.todos.find(params[:id])
-  end
+  def show; end
 
   def create
     @todo = current_user.todos.new(todo_params)
@@ -25,24 +24,17 @@ class TodosController < ApplicationController
     end
   end
 
-  def edit
-    @todo = current_user.todos.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @todo = current_user.todos.find(params[:id])
-
-    begin
-      @todo.update!(todo_params)
-      redirect_to @todo
-    rescue StandardError => e
-      @error = e.message
-      render :edit, status: :unprocessable_entity
-    end
+    @todo.update!(todo_params)
+    redirect_to @todo
+  rescue StandardError => e
+    @error = e.message
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
-    @todo = current_user.todos.find(params[:id])
     @todo.destroy
 
     redirect_to todos_path, status: :see_other
@@ -52,5 +44,12 @@ class TodosController < ApplicationController
 
   def todo_params
     params.require(:todo).permit(:title, :body)
+  end
+
+  def set_todo
+    @todo = current_user.todos.find(params[:id])
+    # rescue ActiveRecord::RecordNotFound => e
+    #   @error = e.message
+    #   render :not_found, status: :not_found
   end
 end
