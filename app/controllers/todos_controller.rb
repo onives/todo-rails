@@ -48,8 +48,5 @@ class TodosController < ApplicationController
 
   def set_todo
     @todo = current_user.todos.find(params[:id])
-    # rescue ActiveRecord::RecordNotFound => e
-    #   @error = e.message
-    #   render :not_found, status: :not_found
   end
 end
