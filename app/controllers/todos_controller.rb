@@ -43,7 +43,7 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.require(:todo).permit(:title, :body)
+    params.require(:todo).permit(:title, :body, collaborator_ids: [])
   end
 
   def set_todo
