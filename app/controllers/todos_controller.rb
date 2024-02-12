@@ -51,7 +51,7 @@ class TodosController < ApplicationController
 
   def set_todo
     # find todo from user's todos or those assigned through collaborations
-    @todo = current_user.todos.find(params[:id]) ||
+    @todo = current_user.todos.find_by(id: params[:id]) || 
             current_user.todo_collaborations.find_by(id: params[:id])
   end
 
