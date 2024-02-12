@@ -6,7 +6,7 @@ class TodosController < ApplicationController
   before_action :set_todo, only: %i[destroy update show edit]
 
   def index
-    @todos = current_user.todos
+    @todos = current_user.todos + current_user.todo_collaborations
   end
 
   def new
@@ -24,10 +24,13 @@ class TodosController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @users = User.all
+  end
 
   def update
     @todo.update!(todo_params)
+    update_collaborations(@todo, todo_params[:collaborator_ids])
     redirect_to @todo
   rescue StandardError => e
     @error = e.message
@@ -47,6 +50,18 @@ class TodosController < ApplicationController
   end
 
   def set_todo
-    @todo = current_user.todos.find(params[:id])
+    # find todo from user's todos or those assigned through collaborations
+    @todo = current_user.todos.find(params[:id]) ||
+            current_user.todo_collaborations.find_by(id: params[:id])
+  end
+
+  def update_collaborations(todo, collaborator_ids)
+    # Remove existing collaborations not in collaborator_ids
+    todo.collaborations.where.not(user_id: collaborator_ids).destroy_all
+
+    # Add new collaborations
+    (collaborator_ids - todo.collaborator_ids).each do |collaborator_id|
+      Collaboration.create(user_id: collaborator_id, todo_id: todo.id)
+    end
   end
 end

@@ -7,4 +7,5 @@ class Todo < ApplicationRecord
   validates :body, presence: true
   has_many :collaborations, dependent: :destroy
   has_many :collaborators, through: :collaborations, source: :user
+  accepts_nested_attributes_for :collaborations
 end

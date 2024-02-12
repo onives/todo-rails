@@ -2,3 +2,6 @@ require: rubocop-rails
 
 Metrics/BlockLength:
   AllowedMethods: ['describe', 'context']
+
+Metrics/LineLength:
+  Max: 200
