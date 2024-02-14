@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Todo, type: :model do
+  let(:user) { User.create(email: 'olive@gmail.com', password: '123456') }
   it 'should save a todo' do
-    subject = Todo.new(body: 'a body', title: 'a title')
+    subject = Todo.new(body: 'a body', title: 'a title', user_id: user.id)
     expect(subject).to be_valid
   end
 

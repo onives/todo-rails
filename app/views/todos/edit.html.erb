@@ -14,6 +14,16 @@
   </div>
 
   <div>
+    <%= form.label :collaborator_ids, 'Collaborators' %>
+    <%= form.collection_check_boxes(:collaborator_ids, User.where.not(id: current_user.id), :id, :email) do |cb| %>
+      <div class="checkbox">
+        <%= cb.check_box %>
+        <%= cb.label %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

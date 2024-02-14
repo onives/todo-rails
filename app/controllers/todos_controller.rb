@@ -2,20 +2,21 @@
 
 # Todos controller Class
 class TodosController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_todo, only: %i[destroy update show edit]
+
   def index
-    @todos = Todo.all
+    @todos = current_user.todos + current_user.todo_collaborations
   end
 
   def new
-    @todo = Todo.new
+    @todo = current_user.todos.new
   end
 
-  def show
-    @todo = Todo.find(params[:id])
-  end
+  def show; end
 
   def create
-    @todo = Todo.new(todo_params)
+    @todo = current_user.todos.new(todo_params)
     if @todo.save
       redirect_to @todo
     else
@@ -24,23 +25,19 @@ class TodosController < ApplicationController
   end
 
   def edit
-    @todo = Todo.find(params[:id])
+    @users = User.all
   end
 
   def update
-    @todo = Todo.find(params[:id])
-
-    begin
-      @todo.update!(todo_params)
-      redirect_to @todo
-    rescue StandardError => e
-      @error = e.message
-      render :edit, status: :unprocessable_entity
-    end
+    @todo.update!(todo_params)
+    update_collaborations(@todo, todo_params[:collaborator_ids] || [])
+    redirect_to @todo
+  rescue StandardError => e
+    @error = e.message
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
-    @todo = Todo.find(params[:id])
     @todo.destroy
 
     redirect_to todos_path, status: :see_other
@@ -49,6 +46,24 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.require(:todo).permit(:title, :body)
+    params.require(:todo).permit(:title, :body, collaborator_ids: [])
+  end
+
+  def set_todo
+    # find todo from user's todos or those assigned through collaborations
+    @todo = current_user.todos.find_by(id: params[:id]) ||
+            current_user.todo_collaborations.find_by(id: params[:id])
+
+    raise ActiveRecord::RecordNotFound, 'Cannot access todo' unless @todo
+  end
+
+  def update_collaborations(todo, collaborator_ids)
+    # Remove existing collaborations not in collaborator_ids
+    todo.collaborations.where.not(user_id: collaborator_ids).destroy_all
+
+    # Add new collaborations
+    (collaborator_ids - todo.collaborator_ids).each do |collaborator_id|
+      Collaboration.create(user_id: collaborator_id, todo_id: todo.id)
+    end
   end
 end
