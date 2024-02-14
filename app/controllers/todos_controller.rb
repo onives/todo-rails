@@ -30,7 +30,7 @@ class TodosController < ApplicationController
 
   def update
     @todo.update!(todo_params)
-    update_collaborations(@todo, todo_params[:collaborator_ids])
+    update_collaborations(@todo, todo_params[:collaborator_ids] || [])
     redirect_to @todo
   rescue StandardError => e
     @error = e.message
