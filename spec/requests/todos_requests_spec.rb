@@ -7,7 +7,6 @@ RSpec.describe 'Todos', type: :request do
   before { sign_in user }
   describe '#index' do
     it 'should return index page' do
-      # sign_in user
       get '/todos'
       expect(response).to have_http_status(:success)
     end
