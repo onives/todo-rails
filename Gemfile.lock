@@ -161,6 +161,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
+    pg (1.5.5)
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
@@ -309,6 +310,7 @@ DEPENDENCIES
   devise (~> 4.9)
   importmap-rails
   jbuilder
+  pg
   puma (>= 5.0)
   rails (~> 7.1.2)
   rails-controller-testing
