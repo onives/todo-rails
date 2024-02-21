@@ -9,8 +9,9 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  devise_scope :user do
-    root to: "devise/sessions#new"
-  end
+  root 'todos#index'
+  # devise_scope :user do
+  #   root to: "devise/sessions#new"
+  # end
   resources :todos
 end
