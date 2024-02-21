@@ -21,15 +21,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_095454) do
   end
 
   create_table "todos", force: :cascade do |t|
-    t.string "title", null: false
-    t.text "body", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_todos_on_user_id"
-  end
-
-  create_table "todosv1", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_todos_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
