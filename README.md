@@ -3,11 +3,14 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
 
-* Ruby version
+* Ruby version : 3.0.0
 
-* System dependencies
+* Rails version : 7.1.2
+
+* Rspec-rails : 6.0.0
+
+* Gem install : bundle install
 
 * Configuration
 
@@ -15,10 +18,7 @@ Things you may want to cover:
 
 * Database initialization
 
-* How to run the test suite
+* How to run the test suite : bin/rspec --format documentation OR bundle exec rspec --format documentation
 
-* Services (job queues, cache servers, search engines, etc.)
+* How to run rubocop : rubocop --require rubocop-rails
 
-* Deployment instructions
-
-* ...
